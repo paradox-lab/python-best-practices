@@ -1,0 +1,36 @@
+**************************
+知识点
+**************************
+
+内置函数
+==========================
+
+* **super** 返回一个代理对象，它会将方法调用委托给 type 的父类或兄弟类。 | aje.task.taskcontext
+* **getattr** 返回对象命名属性的值。 | aje.task.job.clavisoosreport
+* **setattr** 此函数与 getattr() 两相对应。 | aje.task.job.clavisoosreport
+
+----------------------------------------
+
+* locals 更新并返回表示当前本地符号表的字典。 | pandas.DataFrame.read_csv
+
+内置关键字
+============================
+
+* **del** 按索引，而不是值从列表中移除元素。 | pandas.DataFrame.read_csv
+
+类型系统
+============================
+* **val :type = value** | pandas.io.parsers._refine_defaults_read | aje.web.page.BasePage
+
+单元测试
+============================
+
+mock库
+----------------------------
+
+* **Mock.assert_called** 至少调用一次以上
+* **Mock.assert_called_once** 只调用过一次
+* **Mock.assert_called_with** 以指定的参数只调用过一次
+* **Mock.assert_any_call** 以指定的参数调用
+* Mock.assert_has_calls 跟mock.call搭配使用，检查calls列表是否有调用
+* Mock.assert_not_called 从未被调用过

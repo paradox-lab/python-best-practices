@@ -1,0 +1,182 @@
+************************
+远程操作
+************************
+
+依赖的第三方库
+
+* fabric
+
+连接
+=====================================
+
+演示代码的依赖对象::
+
+    from fabric import Connection
+
+密码连接
+------------------------------------
+
+.. code-block:: python
+
+    conn = Connection(
+        host='host',
+        user='user',
+        port=22,
+        connect_kwargs={
+            "password": '******'
+        },
+    )
+
+SSH Key连接
+------------------------------------
+
+.. code-block:: python
+
+    conn = Connection(
+        host="hostname",
+        user="admin",
+        connect_kwargs={
+            "key_filename": "/home/myuser/.ssh/private.key",
+        },
+    )
+
+.. note::
+
+    private.key是一个密钥文件
+
+跳板机连接
+---------------------------------
+
+.. code-block:: python
+
+    # 跳板机连接信息
+    gateway = Connection('host', user='user', port=22,
+                         connect_kwargs={"password": '******'})
+
+    # 参数gateway传入gateway变量，即可通过跳板机远程连接
+    conn = Connection('host', user='user', gateway=gateway,
+                   port=22, connect_kwargs={"password": '******'})
+
+.. seealso::
+
+    相关资料介绍:https://docs.fabfile.org/en/2.6/concepts/networking.html#ssh-connection-gateways
+
+文件传输
+===============================
+
+下载文件
+------------------------------
+
+.. code-block:: python
+
+    # type: fabric.Connection
+    conn.get('本地路径，可以指定文件夹', '远程机器文件路径')
+
+.. warning::
+
+   第二个入参要求是具体的文件路径，不能是文件夹路径。如果要下载多个文件，需要遍历文件夹执行每一个文件的上传
+
+上传文件
+-------------------------------
+
+.. code-block:: python
+
+    # type: fabric.Connection
+    conn.put('本地文件路径', '远程机器路径，可以指定文件夹')
+
+.. warning::
+
+   第一个入参要求是具体的文件路径，不能是文件夹路径。如果要上传多个文件，需要遍历文件夹执行每一个文件的上传
+
+远程执行shell命令
+=============================
+
+演示代码的依赖对象::
+
+    from fabric import Connection
+    from fabric.runnsers import Result
+    from fabric import SerialGroup as Group
+    from fabric.group import GroupResult
+
+.. code-block:: python
+
+   result: Result = conn.run('uname -s')
+   # 打印输出结果
+   print(result.stdout)
+
+.. note::
+
+   对于执行报错的情况，例如执行不存在的shell命令， `conn.run` 会直接抛出异常，意味着 `result` 变量不会赋值成功。
+
+多台机器串行执行shell命令
+----------------------------------------
+
+.. code-block:: python
+
+    # 远程连接4台机器
+    prod = Group('host1', 'host2', 'host3', 'host4',
+                user='user', port=22,
+                connect_kwargs={"password": '******'}
+                )
+    results: GroupResult = prod.run('whoami')
+
+    # 打印4台机器运行结果
+    for conn, result in results.items():  # type: (Connetion, Result)
+        print('---------------------------------')
+        print(conn.host, result.stdout)
+
+多台机器并发执行shell命令
+----------------------------------------------------
+
+.. code-block:: python
+
+    from fabric import ThreadingGroup as Group
+
+    connections = list()
+    for host in ['host1', 'host2', 'host3', 'host4']:
+        conn = Connection(host, user='user', port=22,
+                       connect_kwargs={"password": 'password'})
+        conn.run('hostname')  # 这行不能忽略
+        connections.append(conn)
+
+    prod = Group.from_connections(connections)
+    prod.run('whoami')
+
+在指定目录下执行
+---------------------------------------
+
+.. code-block:: python
+
+    with conn.cd('/home/tmp'):
+        conn.run('pwd')
+
+使用超级用户执行
+---------------------------------------
+
+.. code-block:: python
+
+    conn.sudo('/usr/local/bin/python3.9 ./main.py')
+
+**普通用户账号常见问题**
+
+* 找不到python3.9命令，例如 `conn.sudo('python3.9 ./main.py')`
+    - 指定绝对路径 `/usr/local/bin/python3.9`
+* 没有权限，例如 `conn.sudo(echo "" > /var/log/supervisor/supervisord.log)`
+    - 改用 `conn.sudo("""sh -c 'echo "" > /var/log/supervisor/supervisord.log'""")`
+
+超级用户自动响应和输入密码
+----------------------------------------
+
+.. code-block:: text
+
+    >>> from invoke import Responder
+    >>> from fabric import Connection
+    >>> c = Connection('host')
+    >>> sudopass = Responder(
+    ...     pattern=r'\[sudo\] password:',
+    ...     response='mypassword\n',
+    ... )
+    >>> c.run('sudo whoami', pty=True, watchers=[sudopass])
+    [sudo] password:
+    root
+    <Result cmd='sudo whoami' exited=0>
