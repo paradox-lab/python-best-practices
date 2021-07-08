@@ -40,19 +40,6 @@ Python 开发环境
    writing/gotchas
    writing/license
 
-
-部署优雅的Python代码
---------------------------------
-
-这部分指南关注分享和部署您的Python代码。
-
-.. toctree::
-   :maxdepth: 2
-
-   shipping/publishing
-   shipping/packaging
-   shipping/freezing
-
 归纳整理和最佳实践
 -------------------------------------
 
