@@ -26,6 +26,7 @@
 .. code-block:: rst
 
    :ref:`读取xlsx文件`
+   :ref:`起一个别名 <读取xlsx文件>`
 
 被引用的rst文件, 使用指令
 
