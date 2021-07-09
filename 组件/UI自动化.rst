@@ -2,7 +2,6 @@
 UI自动化
 *******************************
 
-
 依赖的第三方库
 
 * `selenium`_ Selenium is an umbrella project encapsulating a variety of tools and libraries enabling web browser automation.
@@ -63,14 +62,13 @@ UI自动化
 
 .. code-block:: python
 
+    # 收集当前页面的所有等待元素
+    waits = driver.find_elements_by_class_name('el-loading-mask')
     # 显式等待使用的方法，所有wait元素任意一个出现在页面显式loading时返回True，否则返回False
     method = any(list(map(lambda ele: ele.is_displayed(), waits)))
 
-    # 前置动作，点解刷新按钮触发加载等待页面
+    # 前置动作，点击刷新按钮触发加载等待页面
     driver.find_element_by_xpath('//span[text()="Refresh"]').click()
-
-    # 收集当前页面的所有等待元素
-    waits = driver.find_elements_by_class_name('el-loading-mask')
 
     # 确保loading遮罩层先出现，再等待消失
     WebDriverWait(self.driver, 30).until(lambda driver: method)
