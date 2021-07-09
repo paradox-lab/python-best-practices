@@ -38,10 +38,16 @@ Python 开发环境
    writing/tests
    writing/logging
 
+掌握Python
+------------------------------------
+
+.. toctree::
+   :maxdepth: 2
+
+   Python进阶/index
+
 最佳实践
 -------------------------------------
-
-知识点归纳，代码库整理
 
 .. toctree::
    :maxdepth: 2
