@@ -37,18 +37,6 @@ Python 开发环境
    writing/documentation
    writing/tests
    writing/logging
-   writing/gotchas
-
-项目工具
--------------------------------------
-
-写代码只是软件工程的一小部分，还需要掌握自动化部署和测试、编写项目文档等。
-以下工具便是提供这样的功能，也适合于其他语言入go和Node.js使用。
-
-.. toctree::
-   :maxdepth: 2
-
-   项目工具/index
 
 最佳实践
 -------------------------------------
@@ -58,11 +46,12 @@ Python 开发环境
 .. toctree::
    :maxdepth: 2
 
-   最佳实践/组件/index
-   最佳实践/faq
-   最佳实践/demos/numpy-style
-   最佳实践/知识点
-   最佳实践/awesome/index
+   项目工具/index
+   组件/index
+   faq
+   demos/numpy-style
+   知识点
+   awesome/index
 
 
 
