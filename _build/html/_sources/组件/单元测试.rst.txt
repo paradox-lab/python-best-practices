@@ -1,0 +1,36 @@
+************************
+单元测试(Unittest)
+************************
+
+unittest 单元测试框架是受到 JUnit 的启发，与其他语言中的主流单元测试框架有着相似的风格。其支持测试自动化，配置共享和关机代码测试。支持将测试样例聚合到测试集中，并将测试与报告框架独立。
+
+**示例**
+
+多次调用同一函数，验证每次传入的参数
+----------------------------------------
+
+.. code-block:: python
+
+    from unittest.mock import Mock, call
+    # 【setup】 -------------------
+    mock = Mock(return_value=None)
+    mock(1)
+    mock(2)
+    mock(3)
+    mock(4)
+    calls = [call(2), call(3)]
+    # 【assert】 --------------------
+    mock.assert_has_calls(calls)
+    calls = [call(4), call(2), call(3)]
+    # 不限制调用顺序
+    mock.assert_has_calls(calls, any_order=True)
+
+常见问题
+------------------------------------------------
+
+mock open函数时，patch路径填什么?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block::
+
+    @mock.patch('builtins.open')

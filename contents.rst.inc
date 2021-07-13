@@ -59,12 +59,19 @@ Python养成周期的第三阶段阶段，有两个方向并行进行
 .. toctree::
    :maxdepth: 2
 
-   项目工具/index
    组件/index
-   faq
+   工具类/index
    demos/numpy-style
    知识点
    awesome/index
+
+项目工具
+------------------------------------------
+
+.. toctree::
+   :maxdepth: 2
+
+   项目工具/index
 
 
 
