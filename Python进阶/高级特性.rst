@@ -2,3 +2,15 @@
 高级特性
 ***************************
 
+类型注解
+===========================
+
+自定义类型
+---------------------------
+
+.. code-block:: python
+
+    from typing import TypeVar
+
+    T = TypeVar('T')  # Can be anything
+    A = TypeVar('A', str, bytes)  # Must be str or bytes
