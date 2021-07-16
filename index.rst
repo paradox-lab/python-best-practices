@@ -11,6 +11,7 @@ Python最佳实践指南！
 #################################
 
 :原版: https://pythonguidecn.readthedocs.io/zh/latest/
+:next todo: 学习async
 
 程序员的核心竞争力是学习能力，而学习能力的核心是技术文档，可以说，技术文档是第一生产力。
 
